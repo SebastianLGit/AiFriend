@@ -65,7 +65,7 @@ h {
     border-radius: 8px;
     background-color: #383e47;
     position: absolute;
-    top: 90%;
+    top: 85%;
     left: 300px;
     flex-direction: column;
     height: 300px;
@@ -79,6 +79,7 @@ h {
     display: flex;
     flex-direction: column;
     height: 100%;
+
 }
 
 .chat-messages {
@@ -116,4 +117,49 @@ h {
     position: absolute;
     top: -130px;
     left: 0;
+}
+
+#robotExpressions {
+    position: absolute;
+    display: block;
+    top: -300px;
+    left: -200px;
+    width: 100px;
+    height: 100px;
+}
+
+#robotHappy {
+    position: absolute;
+    display: none;
+    top: 0;
+    left: 0;
+    width: 150px;
+    height: 150px;
+}
+
+#robotSad {
+    position: absolute;
+    display: none;
+    top: 0;
+    left:  0;
+    width: 150px;
+    height: 150px;
+}
+
+#robotNeutral {
+    position: absolute;
+    display: none;
+    top: 0;
+    left: 0;
+    width: 150px;
+    height: 150px;
+}
+
+#light {
+    position: absolute;
+    display: none;
+    top: 0;
+    left: 0;
+    width: 150px;
+    height: 150px;
 }

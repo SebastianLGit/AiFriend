@@ -46,26 +46,41 @@ function gotFaces(error, result) {
 
   setTimeout(() => {
 
-    
 
 
     if (detections.length > 0 && detections[0].expressions.happy > 0.7 && !isSmiling) {
       sendChatMessage("You Look Happy!");
+      document.getElementById("robotHappy").style.display = "block";
      
       isSmiling = detections[0].expressions.happy > 0.7;
     }
     else if(isSmiling){
-      isSmiling = detections[0].expressions.happy > 0.7;
-      
+      isSmiling = detections[0].expressions.happy > 0.7;      
+    } else {
+      document.getElementById("robotHappy").style.display = "none";
     }
   
     if (detections.length > 0 && detections[0].expressions.sad > 0.7 && !isSad) {
       sendChatMessage("You Look Sad!");
+      document.getElementById("robotSad").style.display = "block";
       isSad = detections[0].expressions.sad > 0.7;
   
     } 
     else if(isSad) {
       isSad = detections[0].expressions.sad > 0.7;
+    } else {
+      document.getElementById("robotSad").style.display = "none";
+    }
+    if (detections.length > 0 && detections[0].expressions.neutral > 0.2 &&!isNeutral) {
+      sendChatMessage("You Look Neutral!");
+      document.getElementById("robotNeutral").style.display = "block";
+      isNeutral = detections[0].expressions.neutral > 0.2;
+    }
+    else if(isNeutral) {
+      isNeutral = detections[0].expressions.neutral > 0.2;
+    }
+    else {
+      document.getElementById("robotNeutral").style.display = "none";
     }
   }, 1000);
 
