@@ -85,7 +85,7 @@ h {
 .chat-messages {
     flex: 1;
     padding: 20px;
-    width: 300px;
+    width: 90%;
     overflow-y: auto;
     border-bottom: 1px solid #1a2029;
 }
