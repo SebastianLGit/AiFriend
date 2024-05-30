@@ -74,7 +74,7 @@ function faceReady() {
 
 
 
-async function gotFaces(error, result) {
+function gotFaces(error, result) {
   if (error) {
     console.log(error);
     return;
