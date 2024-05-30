@@ -6,6 +6,47 @@ let canvas;
 let isSmiling = false;
 let isSad = false;
 let isNeutral = false;
+let isAngry = false;
+
+
+let sentenceHappy = ["That's wonderful to see! Happiness is such a beautiful emotion.", "It's great to see you in such high spirits! Keep shining bright!", "Your happiness is contagious! Wishing you even more joyful moments ahead.", "Embrace the happiness within you, for it's a precious gift you deserve.", "Let your happiness radiate outwards, lighting up the world around you.", "Happiness looks fantastic on you! Keep smiling and spreading positivity.", "Cherish this moment of joy, for happiness is the key to a fulfilling life.", "Your happiness is like sunshine on a cloudy day, bringing warmth to all around.", "Keep basking in the glow of happiness, for it's where true contentment lies.", "The world is a brighter place with your happiness shining through!"];
+let sentenceSad = [
+            "I'm sorry to hear that you're feeling sad. Remember, it's okay not to be okay sometimes.",
+  "Feeling sad is a natural part of life's ups and downs. Take your time to process your emotions.",
+  "Your sadness won't last forever. Better days are ahead, even if it doesn't feel like it right now.",
+  "Even in moments of sadness, remember that you're not alone. Reach out to someone you trust for support.",
+  "Sadness can be a teacher, helping us appreciate the brighter moments in life even more.",
+  "Allow yourself to feel your sadness fully, but also remember to be kind to yourself during this time.",
+  "It's okay to cry and let your emotions out. Sometimes, that's the first step towards healing.",
+  "Your sadness is valid, and so are you. Take care of yourself as you navigate through these emotions.",
+  "When you're feeling sad, try to engage in activities that bring you comfort and solace.",
+  "Sending you virtual hugs and warmth during this difficult time. Remember, brighter days are ahead."
+];
+
+let sentenceAngry = [
+  "Maintaining a neutral expression can sometimes be a sign of inner calm and composure.",
+  "Even in moments of apparent neutrality, there may be a wealth of thoughts and emotions beneath the surface.",
+  "A stone face can often be a mask hiding deeper complexities and layers of experience.",
+  "Embracing a neutral expression allows one to observe the world with clarity and objectivity.",
+  "In a world full of noise and chaos, a stone face can be a symbol of steadfastness and stability.",
+  "Behind a stone face may lie a mind that is contemplative, introspective, and deeply reflective.",
+  "Sometimes, a stone face is a shield protecting the soul from the turbulence of external circumstances.",
+  "While others may perceive a stone face as devoid of emotion, it can be a sanctuary for inner peace.",
+  "A stone face can serve as a canvas upon which the subtle nuances of life's experiences are painted.",
+  "In moments of stillness and serenity, a stone face can be a testament to the resilience of the human spirit."
+];
+
+function pauseVid() {
+  video.pause();
+}
+
+function playVid() {
+  video.play();
+}
+
+
+
+
 
 function setup() {
   canvas = createCanvas(480, 360);
@@ -31,11 +72,21 @@ function faceReady() {
 }
 
 
-function gotFaces(error, result) {
+
+
+async function gotFaces(error, result) {
   if (error) {
     console.log(error);
     return;
   }
+
+  const happyRandomIndex = Math.floor(Math.random() * sentenceHappy.length);
+  const sadRandomIndex = Math.floor(Math.random() * sentenceSad.length);
+  const angryRandomIndex = Math.floor(Math.random() * sentenceAngry.length);
+
+  const happyMessage = sentenceHappy[happyRandomIndex];
+  const sadMessage = sentenceSad[sadRandomIndex];
+  const angryMessage = sentenceAngry[angryRandomIndex];
 
   detections = result;
   console.log(detections);
@@ -43,49 +94,37 @@ function gotFaces(error, result) {
   clear();
   drawBoxs(detections);
   drawExpressions(detections, 20, 250, 14);
-
-  setTimeout(() => {
-
-
-
     if (detections.length > 0 && detections[0].expressions.happy > 0.7 && !isSmiling) {
-      sendChatMessage("You Look Happy!");
-      document.getElementById("robotHappy").style.display = "block";
-     
+      isSmiling = true;
+      isSad = false;
+      isNeutral = false;
+      sendChatMessage(happyMessage);
+      setTimeout(() => {
+        
+      }, 500); 
+    } else if (detections.length > 0 && detections[0].expressions.sad > 0.7 && !isSad) {
+      isSad = true;
+      isSmiling = false;
+      isNeutral = false;
+      sendChatMessage(sadMessage);
+      
+    } else if (detections.length > 0 && detections[0].expressions.angry > 0.99 && !isNeutral) {
+      isNeutral = false;
+      isAngry = true;
+      isSmiling = false;
+      isSad = false;
+      sendChatMessage(angryMessage);
+      
+    } else {
       isSmiling = detections[0].expressions.happy > 0.7;
-    }
-    else if(isSmiling){
-      isSmiling = detections[0].expressions.happy > 0.7;      
-    } else {
-      document.getElementById("robotHappy").style.display = "none";
-    }
-  
-    if (detections.length > 0 && detections[0].expressions.sad > 0.7 && !isSad) {
-      sendChatMessage("You Look Sad!");
-      document.getElementById("robotSad").style.display = "block";
       isSad = detections[0].expressions.sad > 0.7;
-  
-    } 
-    else if(isSad) {
-      isSad = detections[0].expressions.sad > 0.7;
-    } else {
-      document.getElementById("robotSad").style.display = "none";
+      isNeutral = detections[0].expressions.neutral > 0.99;
+      isAngry = detections[0].expressions.angry > 0.7;
     }
-    if (detections.length > 0 && detections[0].expressions.neutral > 0.2 &&!isNeutral) {
-      sendChatMessage("You Look Neutral!");
-      document.getElementById("robotNeutral").style.display = "block";
-      isNeutral = detections[0].expressions.neutral > 0.2;
-    }
-    else if(isNeutral) {
-      isNeutral = detections[0].expressions.neutral > 0.2;
-    }
-    else {
-      document.getElementById("robotNeutral").style.display = "none";
-    }
-  }, 1000);
 
   faceapi.detect(gotFaces);
 }
+
 
 function sendChatMessage(message) {
     const chatMessages = document.getElementById("chat-messages");
@@ -96,12 +135,14 @@ function sendChatMessage(message) {
     chatMessages.scrollTop = chatMessages.scrollHeight;
 }
 
+
+
 function drawBoxs(detections){
   if (detections.length > 0) {
     for (f=0; f < detections.length; f++){
       let {_x, _y, _width, _height} = detections[f].alignedRect._box;
       stroke(44, 169, 225);
-      strokeWeight(1);
+      strokeWeight(0);
       noFill();
       rect(_x, _y, _width, _height);
     }
@@ -135,3 +176,6 @@ function drawExpressions(detections, x, y, textYSpace){
     text("fear: ", x, y + textYSpace*6);
   }
 }
+
+
+

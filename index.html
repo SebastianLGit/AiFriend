@@ -7,19 +7,23 @@
         <link rel="stylesheet" type="text/css" href="style.css">
     </head>
     <body>
-        <h1>Ai<span style="font-size: 30px; font-weight: bold; background: -webkit-linear-gradient(#4b5dd5, #46ccd1); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Friend</span><span style="font-weight: bold; color: #4b5dd5;"></h1>
+        <h1>Ai<span style="font-size: 30px; font-weight: bold; background: -webkit-linear-gradient(#4b5dd5, #46ccd1); -webkit-background-clip: text; -webkit-text-fill-color: transparent; opacity: 0.6;">Friend</span><span style="font-weight: bold; color: #4b5dd5;"></h1>
 
         <div class="chat-container" id="chat-container">
             <div class="chat-box">
                 <div class="chat-messages" id="chat-messages"></div>
             </div>
 
-            <div class="robotExpressions" id="robotExpressions">
-                <img src="RobotHappy.png" id="robotHappy">
-                <img src="RobotNeutral.png" id="robotNeutral">
-                <img src="RobotSad.png" id="robotSad">
-                <img src="light.png" id="light">
-            </div>
+            
+
+            <div class="square"></div>
+            <div class="circle"></div>
+
+            <div class="square2"></div>
+            <div class="square3"></div>
+
+            <button id="pause" onclick="pauseVid()">Pause!</button>
+            <button id="play" onclick="playVid()">Keep Going!</button>
 
         <footer>
             <div class="footerContent">

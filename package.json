@@ -10,6 +10,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@tensorflow/tfjs": "^4.19.0"
+    "@tensorflow/tfjs": "^4.19.0",
+    "node-fetch": "^3.3.2",
+    "openai": "^4.0.0"
   }
 }

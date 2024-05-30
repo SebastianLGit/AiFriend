@@ -119,47 +119,76 @@ h {
     left: 0;
 }
 
-#robotExpressions {
-    position: absolute;
-    display: none;
-    top: -300px;
-    left: -200px;
+.square {
     width: 100px;
     height: 100px;
+    background: linear-gradient( #3742b9, #37b9b1);
+    position: absolute;
+    top: -400px;
+    left: -250px;
+    opacity: 0.7;
 }
 
-#robotHappy {
+.circle {
+    width: 100px;
+    height: 100px;
+    background: linear-gradient(#37b9b1, #3742b9);
     position: absolute;
-    display: none;
-    top: 0;
-    left: 0;
-    width: 150px;
-    height: 150px;
+    top: -360px;
+    left: -210px;
+    border-radius: 50%;
+    opacity: 0.5;
 }
 
-#robotSad {
+.square3 {
+    width: 100px;
+    height: 100px;
+    background: linear-gradient( #3742b9, #37b9b1);
     position: absolute;
-    display: none;
-    top: 0;
-    left:  0;
-    width: 150px;
-    height: 150px;
+    top: -400px;
+    left: 800px;
+    opacity: 0.7;
 }
 
-#robotNeutral {
+.square2 {
+    width: 100px;
+    height: 100px;
+    background: linear-gradient( #3742b9, #37b9b1);
     position: absolute;
-    display: none;
-    top: 0;
-    left: 0;
-    width: 150px;
-    height: 150px;
+    top: -390px;
+    z-index: 10;
+    left: 740px;
+    opacity: 0.6;
 }
 
-#light {
+#pause {
     position: absolute;
-    display: none;
-    top: 0;
-    left: 0;
-    width: 150px;
-    height: 150px;
+    top: 10px;
+    left: -100px;
+    padding: 10px 20px;
+    background-color: transparent;
+    border: 2px solid #3742b9;
+    color: white;
+}
+#pause:hover {
+    border: 2px solid #37b9b1;
+    transition: 0.5s ease;
+    cursor: pointer;
+}
+
+#play {
+    position: absolute;
+    top: 10px;
+    left: -220px;
+    padding: 10px 20px;
+    background-color: transparent;
+    border: 2px solid #3742b9;
+    color: white;
+    
+}
+
+#play:hover {
+    border: 2px solid #37b9b1;
+    transition: 0.5s ease;
+    cursor: pointer;
 }
