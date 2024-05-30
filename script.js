@@ -1,12 +1,17 @@
 let faceapi;
 let detections = [];
-
-let video;
 let canvas;
 let isSmiling = false;
 let isSad = false;
-let isNeutral = false;
 let isAngry = false;
+
+let video;
+
+
+
+
+
+
 
 
 let sentenceHappy = ["That's wonderful to see! Happiness is such a beautiful emotion.", "It's great to see you in such high spirits! Keep shining bright!", "Your happiness is contagious! Wishing you even more joyful moments ahead.", "Embrace the happiness within you, for it's a precious gift you deserve.", "Let your happiness radiate outwards, lighting up the world around you.", "Happiness looks fantastic on you! Keep smiling and spreading positivity.", "Cherish this moment of joy, for happiness is the key to a fulfilling life.", "Your happiness is like sunshine on a cloudy day, bringing warmth to all around.", "Keep basking in the glow of happiness, for it's where true contentment lies.", "The world is a brighter place with your happiness shining through!"];
@@ -56,6 +61,7 @@ function setup() {
   video.id("video");
   video.size(width, height);
 
+
   const faceOptions = {
     withLandmarks: true,
     withExpressions: true,
@@ -91,6 +97,8 @@ function gotFaces(error, result) {
   detections = result;
   console.log(detections);
 
+  
+
   clear();
   drawBoxs(detections);
   drawExpressions(detections, 20, 250, 14);
@@ -99,6 +107,7 @@ function gotFaces(error, result) {
       isSad = false;
       isNeutral = false;
       sendChatMessage(happyMessage);
+      document.getElementsByTagName("body")[0].style.background = "linear-gradient(to bottom, #7be3ab, #2adb7c)";
       setTimeout(() => {
         
       }, 500); 
@@ -106,24 +115,28 @@ function gotFaces(error, result) {
       isSad = true;
       isSmiling = false;
       isNeutral = false;
+      document.getElementsByTagName("body")[0].style.background = "linear-gradient(to bottom, #1c5463, #094dad)";
       sendChatMessage(sadMessage);
       
-    } else if (detections.length > 0 && detections[0].expressions.angry > 0.99 && !isNeutral) {
+    } else if (detections.length > 0 && detections[0].expressions.angry > 0.2 && !isAngry) {
       isNeutral = false;
       isAngry = true;
       isSmiling = false;
       isSad = false;
+      document.getElementsByTagName("body")[0].style.background = "linear-gradient(to bottom, #c73810, #c73810";
       sendChatMessage(angryMessage);
       
     } else {
       isSmiling = detections[0].expressions.happy > 0.7;
       isSad = detections[0].expressions.sad > 0.7;
-      isNeutral = detections[0].expressions.neutral > 0.99;
+      
       isAngry = detections[0].expressions.angry > 0.7;
     }
 
   faceapi.detect(gotFaces);
 }
+
+
 
 
 function sendChatMessage(message) {
@@ -153,6 +166,8 @@ function drawBoxs(detections){
 
 function drawExpressions(detections, x, y, textYSpace){
   if(detections.length > 0){
+
+
     let {neutral, happy, angry, sad, disgusted, surprised, fearful} = detections[0].expressions;
     textFont('Helvetica Neue');
     textSize(1);
@@ -176,6 +191,7 @@ function drawExpressions(detections, x, y, textYSpace){
     text("fear: ", x, y + textYSpace*6);
   }
 }
+
 
 
 
