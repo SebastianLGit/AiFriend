@@ -1,5 +1,4 @@
 const tf = require('@tensorflow/tfjs');
-
 const model = tf.sequential();
 model.add(tf.layers.dense({units: 1, inputShape: [1]}));
 
